@@ -101,10 +101,13 @@ module TDiary
 				def_vars2 << "@#{var} = #{var} unless #{var} == nil\n"
 			end
 
+			unless defined?(::TDiary::Cache) && ::TDiary::Cache.method_defined?(:store_cache)
+				require 'tdiary/cache/file'
+			end
+
 			unless @io_class
-				require 'tdiary/io/cache/file'
 				require 'tdiary/io/default'
-				@io_class = DefaultIO
+				@io_class = IO::Default
 			end
 
 			cgi_conf = @io_class.load_cgi_conf(self)

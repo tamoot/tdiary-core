@@ -23,6 +23,34 @@ RSpec.configure do |config|
 	config.treat_symbols_as_metadata_keys_with_true_values = true
 end
 
+class DummyTDiary
+	def conf
+		conf = DummyConf.new
+      conf.data_path = TDiary.root + "/tmp/"
+      conf
+	end
+
+	def ignore_parser_cache
+		false
+	end
+end
+
+class DummyConf
+	attr_accessor :data_path
+
+	def cache_path
+		TDiary.root + "/tmp/cache"
+	end
+
+	def options
+		{}
+	end
+
+	def style
+		"wiki"
+	end
+end
+
 # Local Variables:
 # mode: ruby
 # indent-tabs-mode: t

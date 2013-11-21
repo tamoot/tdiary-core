@@ -2,9 +2,15 @@
 require 'spec_helper'
 
 require 'tdiary'
-require 'tdiary/style/tdiary_style'
+require 'tdiary/style/tdiary'
 
 describe TDiary::Style::TdiaryDiary do
+	before :all do
+		klass = TDiary::Style::TdiaryDiary
+		klass.send(:include, TDiary::Style::BaseDiary)
+		klass.send(:include, TDiary::Style::CategorizableDiary)
+	end
+
 	before do
 		@diary = TDiary::Style::TdiaryDiary.new(Time::at( 1041346800 ), "TITLE", "")
 	end

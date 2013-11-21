@@ -10,13 +10,13 @@ gem 'omniauth-github'
 
 gem 'coffee-script'
 
-gem 'redcarpet'
+gem 'hikidoc'
 gem 'twitter-text', require: false
 gem 'pygments.rb'
 
 gem 'thin', require: false
-gem 'sequel'
+gem 'tdiary-io-rdb'
 gem 'pg'
 
-# To use memcached for CacheIO
-# gem 'dalli'
+# To use memcached for Cache
+# gem 'tdiary-cache-memcached'
