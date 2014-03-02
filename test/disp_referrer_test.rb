@@ -16,15 +16,15 @@ require 'uri'
 # top level. Therefore, we will spit required objects defined
 # in tdiary.rb to the top level.
 
-# Stab for @conf
-class StabConf
+# Stub for @conf
+class DispReferrerStubConf
 	def secure; false; end
 	def options; {}; end
 	def referer_table; []; end
 	def no_referer; []; end
 	def io_class; nil; end
 end
-@conf = StabConf.new
+@conf = DispReferrerStubConf.new
 
 # Required module and class structures
 module TDiary
@@ -45,7 +45,7 @@ require 'disp_referrer'
 
 class TestSearchEngines < Test::Unit::TestCase
 	def setup
-		@dr2_setup = DispRef2Setup.new(StabConf.new, nil, true, [], '')
+		@dr2_setup = DispRef2Setup.new(DispReferrerStubConf.new, nil, true, [], '')
 	end
 
 	def match(url, keyword, provider = nil)

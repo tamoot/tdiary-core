@@ -397,7 +397,12 @@ def css_tag
 	if @mode =~ /conf$/ then
 		css = "#{h theme_url}/conf.css"
 	elsif @conf.theme and @conf.theme.length > 0
-		css = "#{h theme_url}/#{h @conf.theme}/#{h @conf.theme}.css"
+		location, name = @conf.theme.split(/\//, 2)
+		unless name
+			name = location
+			location = 'local'
+		end
+		css = __send__("theme_url_#{location}", name)
 	else
 		css = @conf.css
 	end
@@ -414,7 +419,7 @@ def smartphone_tag
 	<<-CSS
 <meta name = "viewport" content = "width = device-width">
 	<style type="text/css"><!--
-	form.comment textarea { 
+	form.comment textarea {
 		width: 80%;
 	}
 	--></style>
@@ -443,7 +448,7 @@ def title_of_day( date, title )
 	r = <<-HTML
 	<span class="date">
 	<a href="#{h @conf.index}#{anchor( date.strftime( '%Y%m%d' ) )}">#{date.strftime @conf.date_format}</a>
-	</span> 
+	</span>
 	<span class="title">#{title}</span>
 	HTML
 	return r.gsub( /^\t+/, '' ).chomp
@@ -455,7 +460,6 @@ end
 
 def nyear_link( date, title )
 	if @conf.show_nyear and @mode != 'nyear' and !@cgi.mobile_agent? then
-		y = date.strftime( '%Y' )
 		m = date.strftime( '%m' )
 		d = date.strftime( '%d' )
 		years = @years.find_all {|year, months| months.include? m}
@@ -533,7 +537,7 @@ end
 # make anchor tag in my diary
 #
 def my( a, str, title = nil )
-	date, noise, frag = a.scan( /^(\d{4}|\d{6}|\d{8}|\d{8}-\d+)([^\d]*)?#?([pct]\d+)?$/ )[0]
+	date, _, frag = a.scan( /^(\d{4}|\d{6}|\d{8}|\d{8}-\d+)([^\d]*)?#?([pct]\d+)?$/ )[0]
 	anc = frag ? "#{date}#{frag}" : date
 	index = /^https?:/ =~ @conf.index ? '' : base_url
 	index += @conf.index.sub(%r|^\./|, '')
@@ -710,7 +714,7 @@ def comment_mail_send
 	mail = @comment.mail
 	mail = @conf.author_mail unless mail =~ %r<[0-9a-zA-Z_.-]+@[\(\)%!0-9a-zA-Z_$@.&+-,'"*-]+>
 	mail = receivers[0] if mail.empty?
-	
+
 	now = Time::now
 	g = now.dup.gmtime
 	l = Time::local( g.year, g.month, g.day, g.hour, g.min, g.sec )
@@ -816,7 +820,7 @@ end
 # themes
 def conf_theme_list
 	r = ''
-	t = 0
+	t = -1
 	@conf_theme_list.each_with_index do |theme, index|
 		if theme[0] == @conf.theme then
 			select = " selected"
@@ -824,25 +828,29 @@ def conf_theme_list
 		end
 		r << %Q|<option value="#{h theme[0]}"#{select}>#{theme[1]}</option>|
 	end
-	img = t == 0 ? 'nowprinting' : @conf.theme
+	img = t == -1 ? 'nowprinting' : @conf.theme.sub(/^.*\//, '')
 	r << <<-HTML
 	</select>
-	<input name="css" size="50" value="#{h @conf.css}">
+	<input name="css" size="30" value="#{h @conf.css}">
 	</p>
 	<p><img id="theme_thumbnail" src="http://www.tdiary.org/theme.image/#{img}.jpg" alt="#{@theme_thumbnail_label}"></p>
-	<script language="JavaScript"><!--
-		function changeTheme( image, list ) {
-			var theme = '';
-			if ( list.selectedIndex == 0 ) {
-				theme = 'nowprinting';
-			} else {
-				theme = list.options[list.selectedIndex].value;
-			}
-			image.src = 'http://www.tdiary.org/theme.image/' + theme + '.jpg'
-		}
-	--></script>
 	#{@theme_location_comment unless @cgi.mobile_agent?}
 	HTML
+end
+
+def theme_list_local(list)
+	theme_paths = [::TDiary::PATH, TDiary.server_root].map {|d| "#{d}/theme/*" }
+	Dir::glob( theme_paths ).sort.map {|dir|
+		theme = dir.sub( %r[.*/theme/], '')
+		next unless FileTest::file?( "#{dir}/#{theme}.css".untaint )
+		name = theme.split( /_/ ).collect{|s| s.capitalize}.join( ' ' )
+		list << ["local/#{theme}",name]
+	}
+	list
+end
+
+def theme_url_local(theme)
+	"#{h theme_url}/#{h theme}/#{h theme}.css"
 end
 
 def saveconf_theme
@@ -850,14 +858,13 @@ def saveconf_theme
 		@conf.theme = @cgi.params['theme'][0]
 		@conf.css = @cgi.params['css'][0]
 	end
-
-	theme_paths = [::TDiary::PATH, TDiary.server_root].map {|d| "#{d}/theme/*" }
-	@conf_theme_list = Dir::glob( theme_paths ).sort.map {|dir|
-		theme = dir.sub( %r[.*/theme/], '')
-		next unless FileTest::file?( "#{dir}/#{theme}.css".untaint )
-		name = theme.split( /_/ ).collect{|s| s.capitalize}.join( ' ' )
-		[theme,name]
-	}.compact.uniq
+	@conf_theme_list = methods.inject([]) {|conf_theme_list, method|
+		if /^theme_list_/ =~ method.to_s
+			__send__(method, conf_theme_list)
+		else
+			conf_theme_list
+		end
+	}.sort.compact.uniq
 end
 
 # comments

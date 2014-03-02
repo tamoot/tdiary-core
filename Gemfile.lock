@@ -1,20 +1,25 @@
-GEM
-  remote: https://rubygems.org/
+GIT
+  remote: git://github.com/jnicklas/capybara.git
+  revision: 595cd4a89bc5c7873e74a3b05761d27c30cc198a
   specs:
-    addressable (2.3.5)
     capybara (2.2.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    childprocess (0.3.9)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.3.5)
+    childprocess (0.5.1)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.0)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.6.3)
+    coffee-script-source (1.7.0)
     coveralls (0.7.0)
       multi_json (~> 1.3)
       rest-client
@@ -23,14 +28,17 @@ GEM
       thor
     daemons (1.1.9)
     diff-lcs (1.2.5)
-    docile (1.1.1)
+    docile (1.1.3)
     eventmachine (1.0.3)
     execjs (2.0.2)
-    fastimage (1.5.5)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
+    fastimage (1.6.0)
       addressable (~> 2.3, >= 2.3.5)
     ffi (1.9.3)
     hike (1.2.3)
     hikidoc (0.0.6)
+    hub (1.11.2)
     jasmine (1.3.2)
       jasmine-core (~> 1.3.1)
       rack (~> 1.0)
@@ -41,13 +49,19 @@ GEM
       addressable (~> 2.3)
     libv8 (3.16.14.3)
     method_source (0.8.2)
-    mime-types (2.0)
+    mime-types (2.1)
     mini_portile (0.5.2)
-    multi_json (1.8.2)
+    multi_json (1.8.4)
+    multipart-post (2.0.0)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    octokit (2.7.1)
+      sawyer (~> 0.5.2)
+    octorelease (0.0.4)
+      hub
+      octokit
     pit (0.0.7)
-    pry (0.9.12.4)
+    pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
@@ -58,43 +72,48 @@ GEM
       rack (>= 1.0)
       rack-test (>= 0.5)
     rake (10.1.1)
-    redcarpet (3.0.0)
+    redcarpet (3.1.1)
     ref (1.0.5)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rspec (2.14.1)
-      rspec-core (~> 2.14.0)
-      rspec-expectations (~> 2.14.0)
-      rspec-mocks (~> 2.14.0)
-    rspec-core (2.14.7)
-    rspec-expectations (2.14.4)
-      diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.14.4)
+    rspec (3.0.0.beta2)
+      rspec-core (= 3.0.0.beta2)
+      rspec-expectations (= 3.0.0.beta2)
+      rspec-mocks (= 3.0.0.beta2)
+    rspec-core (3.0.0.beta2)
+      rspec-support (= 3.0.0.beta2)
+    rspec-expectations (3.0.0.beta2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (= 3.0.0.beta2)
+    rspec-mocks (3.0.0.beta2)
+      rspec-support (= 3.0.0.beta2)
+    rspec-support (3.0.0.beta2)
     rubyzip (1.1.0)
-    selenium-webdriver (2.39.0)
-      childprocess (>= 0.2.5)
+    sawyer (0.5.3)
+      addressable (~> 2.3.5)
+      faraday (~> 0.8, < 0.10)
+    selenium-webdriver (2.40.0)
+      childprocess (>= 0.5.0)
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
-    sequel (4.5.0)
+    sequel (4.7.0)
     simplecov (0.8.2)
       docile (~> 1.1.0)
       multi_json
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
     slop (3.4.7)
-    sprockets (2.10.1)
+    sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.8)
-    tapp (1.4.0)
-      thor
-    term-ansicolor (1.2.2)
-      tins (~> 0.8)
+    sqlite3 (1.3.9)
+    term-ansicolor (1.3.0)
+      tins (~> 1.0)
     test-unit (2.5.5)
-    therubyracer (0.12.0)
+    therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
     thin (1.6.1)
@@ -103,7 +122,7 @@ GEM
       rack (>= 1.0.0)
     thor (0.18.1)
     tilt (1.4.1)
-    tins (0.13.1)
+    tins (1.0.0)
     websocket (1.0.7)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -112,26 +131,26 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  capybara
+  capybara!
   coffee-script
   coveralls
   fastimage
   hikidoc
   jasmine (~> 1.3)
   launchy
+  octorelease
   pit
   pry
   rack
   racksh
   rake
   redcarpet
-  rspec
+  rspec (~> 3.0.0.beta2)
   selenium-webdriver
   sequel
   simplecov
   sprockets
   sqlite3
-  tapp
   test-unit
   therubyracer
   thin

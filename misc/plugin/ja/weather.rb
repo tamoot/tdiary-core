@@ -16,7 +16,7 @@ EUC-JPです。
 
 次に、tdiary.confを編集するか、WWWブラウザからtDiaryの設定画面から「その
 日の天気」を選んで、天気データをいただいてくるURLを設定してください。
-tdiary.confを編集する場合には、@options['weather.url']に設定してくださ 
+tdiary.confを編集する場合には、@options['weather.url']に設定してくださ
 い。両方で設定をした場合には、tDiaryの設定画面での設定が優先されます。
 
 例えば、 NOAA National Weather Serviceを利用する場合には、
@@ -29,8 +29,8 @@ tdiary.confを編集する場合には、@options['weather.url']に設定して�
 うなWWWページから情報を取得しないように注意してください。
 
 さらに、将来日記のタイムゾーンが変化する可能性がある方は、今のタイムゾー
-ンを、@options['weather.tz']か、環境変数TZに設定しておくことをお勧めし 
-ます。これによって、日記が引越した後も、天気データ取得時のタイムゾーン 
+ンを、@options['weather.tz']か、環境変数TZに設定しておくことをお勧めし
+ます。これによって、日記が引越した後も、天気データ取得時のタイムゾーン
 で天気を表示し続けることができます。tdiary.confに設定する場合は、例えば
 日本標準時の場合は、
   @options['weather.tz'] = 'Japan'
@@ -65,7 +65,7 @@ tdiary.confに
 
 天気データは、@options['weather.dir']に設定したディレクトリか、
 @cache_path/weather/ ディレクトリ以下に、年/年月.weather というファイ ル
-名で保存されます。タブ区切りのテキストファイルですので必要に応じて編集 
+名で保存されます。タブ区切りのテキストファイルですので必要に応じて編集
 することができます。タブの数を変えてしまわないように気をつけて編集してく
 ださい。フォーマットの詳細は、Weather.to_sメソッドを参照してください。
 
@@ -105,7 +105,7 @@ tdiary.confに
   trueの場合は、携帯端末からのアクセスの場合に、i_html_stringで生成され
   たCHTMLを表示します。falseの場合は、携帯端末からのアクセスの場合には天
   気を表示しません。ブラウザから設定した場合はそちらが優先されます。
-  
+
 : @options['weather.tz']
   データを取得した場所のタイムゾーン。コマンドライン上で例えば、
     TZ=Japan date
@@ -114,10 +114,10 @@ tdiary.confに
   から設定した場合はそちらが優先されます。このオプションが指定されてい
   ない場合、環境変数TZが設定されていればその値を使用します。そうでなけ
   ればタイムゾーンは記録しません。
-   
+
   天気データにタイムゾーンが記録されていない場合は、もし将来日記のタイム
   ゾーンが変更された場合に違う時刻を表示することになります。
-  
+
   日付の判定など、天気データの記録以外の時刻の管理には、日記全体のタイム
   ゾーンが用いられます。
 
@@ -162,7 +162,7 @@ Weatherクラスに、Words_jaという配列定数として与えてありま�
 に書いておくと、そのうち配布元で追加されるかもしれません。
 
 == 細かい設定
-天気データ取得元や好みに合わて、以下のメソッドを変更することで、より柔 
+天気データ取得元や好みに合わて、以下のメソッドを変更することで、より柔
 軟な設定ができます。
 
 === 表示に関するもの
@@ -180,8 +180,8 @@ Weatherクラスに、Words_jaという配列定数として与えてありま�
 : Weather.parse_html( html, items )
   ((|html|))文字列を解析して、((|items|))ハッシュに従って@data[item]を定
   義してください。((|items|))には@optins['weather.items']または
-  Weather_default_itemsが代入されます。返り値は利用されません。テーブル 
-  を用いた天気情報源ならば、このメソッドをあまり改造しないで使えるかも 
+  Weather_default_itemsが代入されます。返り値は利用されません。テーブル
+  を用いた天気情報源ならば、このメソッドをあまり改造しないで使えるかも
   しれません。
 
 == まだやるべきこと
@@ -343,6 +343,8 @@ end
 
 # www configuration interface
 def weather_configure_html( conf )
+	station = Weather::extract_station_id(conf['weather.url'])
+	station ||= conf['weather.url']
 	<<-HTML
 	<h3 class="subtitle">その日の天気プラグイン</h3>
 	<p>その日の天気を、その日の日記を最初に更新する時に取得して保存し、
@@ -352,8 +354,11 @@ def weather_configure_html( conf )
 		<a href="http://weather.noaa.gov/">NOAA National Weather Service</a>
 		から、Select a country...で国名を選んでGo!ボタンを押し、
 		次に観測地点を選んでください。
-		そして、その時表示されたページのURLを、以下に記入してください。</p>
-	<p><input name="weather.url" value="#{conf['weather.url']}" size="60"></p>
+		そして、その時表示されたページのURL
+		(例えば東京ヘリポートの場合は<tt>http://weather.noaa.gov/weather/current/RJTI.html</tt>となります)
+		を、以下に記入してください。
+		大文字4文字のStation IDでもかまいません。</p>
+	<p><input name="weather.url" value="#{station}" size="50"></p>
 	<p>将来日記のタイムゾーンが変化する可能性がある方は、
 		今のタイムゾーンを記録しておくことをお勧めします。
 		これによって、日記が引越した後も、

@@ -18,7 +18,7 @@ end
 
 def migrate_old_data
 	# backward compatibility
-	if File.exists?("#{@cache_path}/recent_comments") && !File.exists?("{#{@conf.data_path}/recent_comments")
+	if File.exist?("#{@cache_path}/recent_comments") && !File.exist?("{#{@conf.data_path}/recent_comments")
 		FileUtils.mv( "#{@cache_path}/recent_comments", "#{@conf.data_path}/recent_comments" )
 	end
 	# workaround for "/foo//bar" doesn't equal "/foo/bar"
@@ -47,7 +47,7 @@ def recent_comment3(ob_max = 'OBSOLUTE' ,sep = 'OBSOLUTE',ob_date_format = 'OBSO
 	recent_comment3_init
 
 	cache = @conf['recent_comment3.cache'].untaint
-	date_format = @conf['recent_comment3.date_format'] 
+	date_format = @conf['recent_comment3.date_format']
 	excepts = @conf['recent_comment3.except_list'].split(/,/)
 	format = @conf['recent_comment3.format']
 	titlelen = @conf['recent_comment3.titlelen']

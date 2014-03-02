@@ -34,7 +34,7 @@
 #
 # Copyright (c) 2001,2002,2003 Junichiro KITA <kita@kitaj.no-ip.com>
 # Distributed under the GPL
-# 
+#
 
 require 'fileutils'
 require 'time'
@@ -146,7 +146,7 @@ end
 
 # backward compatibility
 def todo_file
-	if File.exists?( "#{@cache_path}/todo" ) then
+	if File.exist?( "#{@cache_path}/todo" ) then
 		FileUtils.mv( "#{@cache_path}/todo", "#{@conf.data_path}/todo")
 	end
 	(@options && @options['todo.path'] || @conf.data_path) + "/todo"
