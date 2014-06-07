@@ -31,12 +31,12 @@ group :development do
     gem 'pry'
     gem 'test-unit'
     gem 'rspec', '~> 3.0.0.beta2'
-    gem 'capybara', require: 'capybara/rspec', github: 'jnicklas/capybara'
+    gem 'capybara', require: 'capybara/rspec'
     gem 'selenium-webdriver'
     gem 'launchy'
     gem 'sequel'
     gem 'sqlite3'
-    gem 'jasmine', '~> 1.3'
+    gem 'jasmine'
     gem 'simplecov', require: false
     gem 'coveralls', require: false
   end
