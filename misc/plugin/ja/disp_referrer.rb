@@ -153,8 +153,7 @@ Please note that some methods in this plugin are written by other
 authors as written in the comments.
 
 Permission is granted for use, copying, modification, distribution, and
-distribution of modified versions of this work under the terms of GPL
-version 2 or later.
+distribution of modified versions of this work under the terms of GPL version 2 or later.
 =end
 
 =begin ChangeLog
@@ -206,18 +205,6 @@ Disp_referrer2_abstract = <<'_END'.taint
 	通常のリンク元の下にまとめて表示します。
 	サーチエンジンの検索結果は、検索語毎にまとめられます。
 </p>
-_END
-Disp_referrer2_with_Nora = <<'_END'.taint
-<p>
-	Noraライブラリを使っていますので、表示が少し速いはずです。
-</p>
-_END
-Disp_referrer2_without_Nora = <<'_END'.taint
-<!-- p>
-	表示速度が気になる場合は、
-	<a href="http://www.moonwolf.com/ruby/archive/nora-20040830.tar.gz">Nora
-	ライブラリ</a>をインストールしてみてください。
-</p -->
 _END
 Disp_referrer2_cache_info = <<'_END'.taint
 <p>
@@ -464,7 +451,6 @@ DispReferrer2_Engines = {
 		[%r{\Ahttp://(?:image-search\.yahoo\.co\.jp/(?:search|detail)|images\.search\.yahoo\.co\.jp/bin/(?:search|query))}, '".co.jpのYahoo!画像検索"', ['p'], DispReferrer2_Google_cache],
 		[%r{\Ahttp://images\.search\.yahoo\.(:?com|co\.jp)/search/images(?:/view)?}, '".comのYahoo!画像検索"', ['p'], DispReferrer2_Google_cache],
 	],
-	'yahoofs' => [[%r{\Ahttp://cache\.yahoofs\.jp/}i, '"Yahoo!検索"', ['w'], DispReferrer2_Yahoofs]],
 	'netscape' => [[%r{\Ahttp://[^/]+\.netscape\.([^/]+)/}i, '".#{$1}のNetscape検索"', ['search', 'query'], DispReferrer2_Google_cache]],
 	'msn' => [[%r{\Ahttp://[^/]+\.MSN\.([^/]+)/}i, '".#{$1}のMSNサーチ"', ['q', 'MT'], nil ]],
 	'bing' => [[%r{\Ahttp://(www|jp)\.bing\.com/}i, '"Bing検索"', ['q'], nil ]],
@@ -493,7 +479,6 @@ DispReferrer2_Engines = {
 		[%r{\Ahttp://srchnavi\.nifty\.com/}i, '"@niftyのリダイレクタ"', ['title'], nil ],
 		[%r{\Ahttp://azby\.search\.nifty\.com/}i, '"AzbyClub"', ['Text'], nil ],
 	],
-	'eniro' => [[%r{\Ahttp://[^/]+\.eniro\.se/}i, '"Eniro"', ['q'], DispReferrer2_Google_cache]],
 	'excite' => [[%r{\Ahttp://[^/]+\.excite\.([^/]+)/}i, '".#{$1}のExcite"', ['search', 's', 'query', 'qkw'], nil ]],
 	'biglobe' => [
 		[%r{\Ahttp://(?:[^/]+\.)?search\.biglobe\.ne\.jp/}i, '"BIGLOBEサーチ"', ['q'], nil ],

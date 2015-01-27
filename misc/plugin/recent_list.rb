@@ -14,7 +14,7 @@
 #         える必要があるでしょう。
 #
 # Copyright (c) 2001,2002 Junichiro KITA <kita@kitaj.no-ip.com>
-# Distributed under the GPL
+# Distributed under the GPL2 or any later version.
 #
 module ::TDiary
 	class TDiaryMonthWithoutFilter < TDiaryMonth
@@ -28,14 +28,10 @@ def recent_list( days = 30, date_format = nil, title_with_body = nil, show_size 
 
 	result = %Q|<ul class="recent-list">\n|
 
-	cgi = CGI::new
-	def cgi.referer; nil; end
-
 	catch(:exit) {
 		@years.keys.sort.reverse_each do |year|
 			@years[year].sort.reverse_each do |month|
-				cgi.params['date'] = ["#{year}#{month}"]
-				m = TDiaryMonthWithoutFilter::new(cgi, '', @conf)
+				m = DiaryContainer::find_by_month(@conf, "#{year}#{month}")
 				m.diaries.keys.sort.reverse_each do |date|
 					next unless m.diaries[date].visible?
 					result << %Q|<li><a href="#{@index}#{anchor date}">#{m.diaries[date].date.strftime(date_format)}</a>\n|

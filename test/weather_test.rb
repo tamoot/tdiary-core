@@ -153,7 +153,7 @@ class TestWeatherTranslaterJa < Test::Unit::TestCase
 	def test_translate_few_clouds
 		ja = @plugin_class::WeatherTranslator::S.new('Few clouds').\
 			translate(@plugin_class::Weather::Words_ja)
-		assert_equal('曇', ja)
+		assert_equal('晴', ja)
 	end
 
 	def test_translate_broken_clouds
@@ -178,6 +178,24 @@ class TestWeatherTranslaterJa < Test::Unit::TestCase
 		ja = @plugin_class::WeatherTranslator::S.new('Scattered clouds').\
 			translate(@plugin_class::Weather::Words_ja)
 		assert_equal('ちぎれ雲', ja)
+	end
+
+	def test_translate_no_significant_weather
+		ja = @plugin_class::WeatherTranslator::S.new('Unknown').\
+			translate(@plugin_class::Weather::Words_ja)
+		assert_equal('', ja)
+	end
+end
+
+class TestWeatherTranslaterEn < Test::Unit::TestCase
+	def setup
+		@plugin_class = TDiary::StubPlugin::new_plugin('misc/plugin/weather.rb', 'en')
+	end
+
+	def test_translate_no_significant_weather
+		en = @plugin_class::WeatherTranslator::S.new('Unknown').\
+			translate(@plugin_class::Weather::Words_en)
+		assert_equal('', en)
 	end
 end
 

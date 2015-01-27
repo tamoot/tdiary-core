@@ -24,7 +24,7 @@
 #   http://ponx.s5.xrea.com/hiki/ja/counter.rb.html (Japanese)
 #
 # Copyright (c) 2002-2006 Masao Mutoh
-# You can redistribute it and/or modify it under GPL2.
+# You can redistribute it and/or modify it under GPL2 or any later version.
 #
 =begin ChangeLog
 2006-02-14 Masao Mutoh
@@ -494,7 +494,7 @@ TOPLEVEL_CLASS
 			msg = @options["counter.kiriban_today_msg"] ? @options["counter.kiriban_today_msg"] : ""
 			ERB.new(msg.untaint).result(binding)
 		else
-			msg = @options["counter.kiriban_nomatch_msg"] ? @options["counter.kiriban_nomatch_msg"] : ""
+			@options["counter.kiriban_nomatch_msg"] ? @options["counter.kiriban_nomatch_msg"] : ""
 		end
 	end
 end

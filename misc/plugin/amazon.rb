@@ -3,7 +3,7 @@
 # see document: #{@lang}/amazon.rb
 #
 # Copyright (C) 2005-2007 TADA Tadashi <sho@spc.gr.jp>
-# You can redistribute it and/or modify it under GPL2.
+# You can redistribute it and/or modify it under GPL2 or any later version.
 #
 
 autoload :Net,     'net/http'
@@ -46,6 +46,8 @@ if @conf['amazon.bitly'] and @conf['bitly.login'] and @conf['bitly.key'] then
 	add_js_setting( '$tDiary.plugin.bitly.apiKey', "'#{@conf['bitly.key']}'" )
 end
 
+class AmazonRedirectError < StandardError; end
+
 def amazon_fetch( url, limit = 10 )
 	raise ArgumentError, 'HTTP redirect too deep' if limit == 0
 
@@ -57,6 +59,8 @@ def amazon_fetch( url, limit = 10 )
 		res.body
 	when Net::HTTPRedirection
 		amazon_fetch( res['location'].untaint, limit - 1 )
+	when Net::HTTPForbidden, Net::HTTPServiceUnavailable
+		raise AmazonRedirectError.new( limit.to_s )
 	else
 		raise ArgumentError, res.error!
 	end
@@ -78,10 +82,14 @@ def amazon_call_ecs( asin, id_type, country )
 	url << "&ResponseGroup=Medium"
 	url << "&Version=#{@amazon_require_version}"
 
+	limit = 10
 	begin
-		Timeout.timeout( 10 ) do
+		Timeout.timeout( limit ) do
 			amazon_fetch( url )
 		end
+	rescue AmazonRedirectError
+		limit = $!.message.to_i
+		retry
 	rescue ArgumentError
 	end
 end
@@ -170,7 +178,7 @@ def amazon_detail_html( item )
 	@conf['amazon.imgsize'] = size_orig
 
 	url = amazon_url( item )
-	html = <<-HTML
+	<<-HTML
 	<a class="amazon-detail" href="#{url}"><span class="amazon-detail">
 		<img class="amazon-detail left" src="#{h image[:src]}"
 		height="#{h image[:height]}" width="#{h image[:width]}"

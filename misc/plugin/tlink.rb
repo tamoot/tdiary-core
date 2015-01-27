@@ -16,7 +16,7 @@
 #       <a href="http://tdiary.tdiary.net/20020131.html#c01", title="テストでござるよ">このツッコミ</a>
 #
 # Copyright(C) 2002 NT <nt@24i.net>
-# Distributed under the GPL.
+# Distributed under the GPL2 or any later version.
 #
 # Modified: by abbey <inlet@cello.no-ip.org>
 #
@@ -75,7 +75,7 @@ def tlink_initialize
   @tlink_path = dir + "/tlink.dat"
 
   Dir.mkdir(dir, 0700) unless FileTest.exist?(dir)
-  db = PStore.new(@tlink_path).transaction do |db|
+  PStore.new(@tlink_path).transaction do |db|
     if (db.root?('tlinkdata')) then
       @tlink_dic = db["tlinkdata"]
     else

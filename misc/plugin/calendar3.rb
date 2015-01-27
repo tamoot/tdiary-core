@@ -15,7 +15,7 @@
 #     省略時の値はtrueなので，表示したくない場合のみfalseを設定する．
 #
 # Copyright (c) 2001,2002 Junichiro KITA <kita@kitaj.no-ip.com>
-# Distributed under the GPL
+# Distributed under the GPL2 or any later version.
 #
 #
 # sample CSS for calendar3
@@ -141,7 +141,6 @@ def calendar3
 	end
 	year = date.year
 	month = date.month
-	day = date.day
 
 	result << %Q|<span class="calendar-prev-month"><a href="#{h @index}#{anchor "%04d%02d" % Calendar3.prev_month(year, month)}">&lt;&lt;</a></span>\n|
 	result << %Q|<span class="calendar-current-month"><a href="#{h @index}#{anchor "%04d%02d" % [year, month]}">#{"%04d/%02d" % [year, month]}</a>/</span>\n|

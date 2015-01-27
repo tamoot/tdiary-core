@@ -21,7 +21,7 @@
 #                      }
 #
 # Copyright (c) 2001,2002 Junichiro KITA <kita@kitaj.no-ip.com>
-# Distributed under the GPL
+# Distributed under the GPL2 or any later version.
 #
 @calendar2_image_dir = @options && @options['image.dir'] || './images/'
 @calendar2_image_dir.chop! if /\/$/ =~ @calendar2_image_dir
@@ -72,8 +72,6 @@ def calendar2_make_anchor(ym, str)
 end
 
 def calender2_make_image(diary, date)
-	f_list = []
-
 	/[^_]image(?:_left|_right|_gps)?\s*\(?\s*([0-9]*)\s*\,?\s*'[^']*'/ =~ diary.to_s
 	if $1 == nil
 		return nil

@@ -4,7 +4,7 @@
 #
 # Copyright (C) 2003-2005 Minero Aoki
 # Copyright (C) 2012, TADA Tadashi <t@tdtds.jp>
-# You can redistribute it and/or modify it under GPL2.
+# You can redistribute it and/or modify it under GPL2 or any later version.
 #
 #
 
@@ -222,7 +222,7 @@ module DefaultIOSearch
 end
 
 def search_input_form( q )
-	r = <<-HTML
+	<<-HTML
 		<form method="GET" action="#{@conf.index}"><div>
 			検索キーワード:
 			<input name="q" value="#{h q}">
@@ -237,7 +237,6 @@ def search_result
 	end
 
 	query = CGI::unescape( @cgi.params['q'][0] )
-	start = CGI::unescape( @cgi.params['start'][0] || '0' ).to_i
 
 	begin
 		patterns = DefaultIOSearch::setup_patterns(query)

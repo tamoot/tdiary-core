@@ -10,8 +10,7 @@ Please note that some methods in this plugin are written by other
 authors as written in the comments.
 
 Permission is granted for use, copying, modification, distribution, and
-distribution of modified versions of this work under the terms of GPL
-version 2 or later.
+distribution of modified versions of this work under the terms of GPL version 2 or later.
 =end
 
 =begin ChangeLog
@@ -63,18 +62,6 @@ Disp_referrer2_abstract = <<'_END'.taint
 	and shows them separately. Search keywords from different engines are
 	compound together.
 </p>
-_END
-Disp_referrer2_with_Nora = <<'_END'.taint
-<p>
-	Pages are displayed a little bit faster with the Nora library.
-</p>
-_END
-Disp_referrer2_without_Nora = <<'_END'.taint
-<!-- p>
-	Please install the
-	<a href="http://www.moonwolf.com/ruby/archive/nora-20040830.tar.gz">Nora
-	library</a> if you feel the pages show too slowly.
-</p -->
 _END
 Disp_referrer2_cache_info = <<'_END'.taint
 <p>

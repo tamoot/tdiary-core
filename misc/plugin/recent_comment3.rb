@@ -5,7 +5,7 @@
 #   @secure = true な環境では動作しません．
 #
 # Copyright (c) 2002 Junichiro KITA <kita@kitaj.no-ip.com>
-# Distributed under the GPL
+# Distributed under the GPL2 or any later version.
 #
 require 'pstore'
 require 'fileutils'
@@ -95,13 +95,9 @@ def recent_comment3(ob_max = 'OBSOLUTE' ,sep = 'OBSOLUTE',ob_date_format = 'OBSO
 		if entries.size == 0
 			notfound_msg
 		else
-			cgi = CGI::new
-			def cgi.referer; nil; end
-
 			tree_order.each do |entry_date|
 				a_entry = @index + anchor(entry_date)
-				cgi.params['date'] = [entry_date]
-				diary = TDiaryDay::new(cgi, '', @conf)
+				diary = DiaryContainer::find_by_day(@conf, entry_date)
 				title = diary.diaries[entry_date].title.gsub( /<[^>]*>/, '' ) if diary
 
 				if title.nil? || title.length == 0 || title.strip.delete('　').delete(' ').length == 0 then
@@ -158,7 +154,7 @@ add_update_proc do
 				db['comments'].each do |c|
 					break if c.nil?
 
-					comment, cdate, serial = c
+					comment, cdate, _ = c
 					next if cdate.strftime('%Y%m%d') != date
 
 					if comment == dcomment && comment.date.to_s == dcomment.date.to_s

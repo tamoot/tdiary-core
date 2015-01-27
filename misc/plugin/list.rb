@@ -12,7 +12,7 @@
 #     l: リスト文字列(\nくぎり)
 #
 # Copyright (c) 2002 abbey <inlet@cello.no-ip.org>
-# Distributed under the GPL.
+# Distributed under the GPL2 or any later version.
 #
 
 def ol( l, t = nil, s = nil )
@@ -28,7 +28,7 @@ def li( text )
 	text.each_line do |line|
 		list << ("<li>" + line.chomp + "</li>")
 	end
-	result = list
+	list
 end
 
 
