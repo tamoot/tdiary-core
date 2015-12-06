@@ -1,21 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rack'
-gem 'sprockets'
-gem 'hikidoc'
-gem 'fastimage'
-gem 'gemoji'
-gem 'mail'
-
-group :coffee do
-  gem 'coffee-script'
-  gem 'therubyracer'
-end
+gemspec
 
 group :development do
   gem 'pit', require: false
   gem 'racksh', require: false
-  gem 'rake'
   gem 'redcarpet'
 
   group :test do
