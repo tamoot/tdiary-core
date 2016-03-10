@@ -5,7 +5,6 @@ sudo: false
 services: memcache
 
 rvm:
-  - 2.0.0
   - 2.1
   - 2.2
   - 2.3.0
@@ -29,7 +28,6 @@ script: if [ $TEST_MODE = "gem" ] ; then bundle exec tdiary test ; else bundle e
 
 env:
   - TEST_MODE=rack
-  - TEST_MODE=secure
   - TEST_MODE=gem
 
 notifications:
