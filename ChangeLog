@@ -1,3 +1,26 @@
+2016-08-23  TADA Tadashi <t@tdtds.jp>
+	* base.css, default.css: define img.right and img.left after img.photo
+
+2016-06-30  TADA Tadashi <t@tdtds.jp>
+	* skip loading octokit on production mode in Rakefile
+
+2016-06-29  TADA Tadashi <t@tdtds.jp>
+	* move preview plugin from contrib
+	* release 5.0.1
+
+2016-05-12  MATSUOKA Kohei <kohei@machu.jp>
+	* plugin.rb: support asynchronous JavaScript loading
+	* remove sprockets from release package
+
+2016-05-09  TADA Tadashi <t@tdtds.jp>
+	* theme/base.css: set width of dropdown list of draft plugin
+
+2016-04-26  TADA Tadashi <t@tdtds.jp>
+	* heroku/tdiary.conf: use MONGODB_URI environment variable instead of MONGOLAB_URI
+
+2016-04-19  MATSUOKA Kohei <kohei@machu.jp>
+	* Dockerfile: support docker
+
 2016-04-01  TADA Tadashi <t@tdtds.jp>
 	* category.rb: enable to call category_list and category_dropdown_list
 	plugins in diary header
